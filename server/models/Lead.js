@@ -9,4 +9,5 @@ const LeadSchema = new mongoose.Schema({
   createdAt:  { type: Date, default: Date.now }
 });
 
-export default mongoose.model('Lead', LeadSchema);
+const Lead=mongoose.model('Lead', LeadSchema);
+export default Lead;
