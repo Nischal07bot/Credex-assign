@@ -25,4 +25,16 @@ export const sendLeadEmail=async(lead)=>{
       };
       await transporter.sendMail(mailOptions);//sending the object to the transporter
 }
-
+export const sendQuoteEmail=async(data)=>{
+  const mailOptions={
+    from:'no-reply@softsell.example.com',
+    to:process.env.ADMIN_EMAIL,
+    subject:'New Quote Request',
+    html:`<p><strong>${data.email}</strong> requested a quote</p>
+    <ul>
+    <li>Email: ${data.email}</li>
+    <li>Quote: ${data.quote}</li>
+  </ul>`
+  }
+  await transporter.sendMail(mailOptions);
+}
