@@ -5,8 +5,10 @@ import * as UserService from "../Services/User.Service.js";
 // Register new user
 export const register = async (req, res) => {//register endpoint is correct
   const errors=validationResult(req);
+  console.log(req.body);
     if(!errors.isEmpty())
     {
+      console.log('Validation Errors:', errors.array()); // Log validation errors
         return res.status(400).json({errors:errors.array()});
     }
   try {

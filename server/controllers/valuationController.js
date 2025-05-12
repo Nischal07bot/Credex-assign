@@ -9,10 +9,11 @@ export const computeValuation=async(req,res)=>{
         res.status(400).json({errors:errors.array()});
     }
     try{
-    const {LicenseType,quantity}=req.body;
-    const valuation=ValuationService.computeValuation(LicenseType,quantity);
-    await Valuation.create({licenseType:LicenseType,quantity:quantity,valuation:valuation});
-    res.json({ valuation });
+        console.log(req.body);
+    const {licensetype,quantity}=req.body;
+    const valuation=ValuationService.computeValuation(licensetype,quantity);
+    await Valuation.create({licensetype:licensetype,quantity:quantity,valuation:valuation});
+    res.json({ value:valuation,validityPeriod:new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()});
 }
 catch(error)
 {

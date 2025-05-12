@@ -1,4 +1,4 @@
-const API_URI='https://localhost:3000/api';
+const API_URI='http://localhost:3000/api';
 export const api={
     getQuote:async(data)=>{
         try{
@@ -7,7 +7,7 @@ export const api={
                 headers:{
                     'Content-Type':'application/json',
                 },
-                body:JSON.stringiify(data)
+                body:JSON.stringify(data)
             })
             if(!response.ok){
                 throw new Error("Failed to fetch the quote");

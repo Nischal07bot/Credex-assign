@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
 import LeadRoutes from "./routes/LeadRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import ValuationRoutes from "./routes/ValuationRoutes.js"
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 // Load environment variables
@@ -19,7 +20,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(morgan("dev"));
 app.use(cookieParser());
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -27,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use("/api",userRoutes);
 app.use("/api",LeadRoutes);
 app.use("/api",chatRoutes);
-app.use("")
+app.use("/api",ValuationRoutes);
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Credex API' });
 });
