@@ -12,7 +12,7 @@ const transporter=nodemailer.createTransport({
 })
 export const sendLeadEmail=async(lead)=>{
     const mailOptions = {//creating the mail options object
-        from: 'no-reply@softsell.example.com',
+        from: 'singhnischal953@gmail.com',
         to: process.env.ADMIN_EMAIL,
         subject: 'New Lead Received',
         html: `<p><strong>${lead.name}</strong> submitted a new lead:</p>
@@ -22,12 +22,18 @@ export const sendLeadEmail=async(lead)=>{
                  <li>License: ${lead.licenseType}</li>
                  <li>Message: ${lead.message}</li>
                </ul>`
-      };
+      }
+      try{
       await transporter.sendMail(mailOptions);//sending the object to the transporter
+      console.log("Email sent successfully");
+      }
+      catch(error){
+        console.log("Error sending email",error);
+      }
 }
 export const sendQuoteEmail=async(data)=>{
   const mailOptions={
-    from:'no-reply@softsell.example.com',
+    from:'singhnischal953@gmail.com',
     to:process.env.ADMIN_EMAIL,
     subject:'New Quote Request',
     html:`<p><strong>${data.email}</strong> requested a quote</p>
@@ -36,5 +42,11 @@ export const sendQuoteEmail=async(data)=>{
     <li>Quote: ${data.quote}</li>
   </ul>`
   }
-  await transporter.sendMail(mailOptions);
+  try{
+    await transporter.sendMail(mailOptions);//sending the object to the transporter
+    console.log("Email sent successfully");
+    }
+    catch(error){
+      console.log("Error sending email",error);
+    }
 }

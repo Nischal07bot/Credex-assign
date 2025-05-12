@@ -2,7 +2,10 @@
 // jsx
 import {useState} from 'react';
 import {api} from '../Services/api';
+import {useAuth} from '../context/AuthContext.jsx';
+
 const HeroSection = () => {
+    const {user, logout} = useAuth();
     const [formData,setFormData]=useState({
         licensetype:'',
         quantity:1
@@ -39,9 +42,32 @@ const HeroSection = () => {
         alert("An error occurred while getting the quote. Please try again.");
        }
     }
+    const handleAcceptQuote=async()=>{
+        try{
+            const result=await api.acceptQuote({
+                email:user.email,
+                quote:quoteResult.estimatedValue || quoteResult.value || 'N/A'
+            });
+            console.log(result);
+        }
+        catch(error){
+            console.log(error);
+            alert("An error occurred while accepting the quote. Please try again.");
+        }
+    }
     return (
         <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 min-h-screen flex items-center">
             <div className="container mx-auto px-6 py-16">
+                {/* Add Logout Button */}
+                <div className="absolute top-4 right-4">
+                    <button
+                        onClick={logout}
+                        className="bg-white text-indigo-600 px-4 py-2 rounded-lg font-semibold hover:bg-red-500 transition duration-300"
+                    >
+                        Logout
+                    </button>
+                </div>
+                
                 <div className="max-w-3xl">
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                         Sell Your Unused Software Licenses
@@ -115,6 +141,7 @@ const HeroSection = () => {
                                     className="w-full bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300"
                                     onClick={() => {
                                         // Add your accept quote logic here
+                                        handleAcceptQuote();
                                         alert('Quote accepted! Our team will contact you shortly.');
                                     }}
                                 >
