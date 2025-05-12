@@ -64,7 +64,7 @@ const HeroSection = () => {
                 <div className="absolute top-4 right-4">
                     <button
                         onClick={logout}
-                        className="bg-white text-indigo-600 px-4 py-2 rounded-lg font-semibold hover:bg-red-500 transition duration-300"
+                        className="!bg-white !text-indigo-600 ring-2 ring-white px-4 py-2 rounded-lg font-semibold hover:!bg-red-600 hover:!text-white transition-all duration-300 ease-in-out"
                     >
                         Logout
                     </button>
@@ -99,7 +99,7 @@ const HeroSection = () => {
                                 onChange={handleChange}
                                 placeholder="Number of licenses"
                                 min="1"
-                                className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                                className="w-full px-4 py-2 rounded-lg focus:outline-none ring-2 focus:ring-white"
                                 required
                             />
                         </div>
