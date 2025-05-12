@@ -13,8 +13,9 @@ export const createLead=async (req,res,next)=>{
         res.status(201).json(lead);
         next();
     }catch(error){
-        res.status(500).json({error:error.message});
         next(error);
+        res.status(500).json({error:error.message});
+       
     }
 }
 export const createquote=async(req,res,next)=>{
@@ -24,13 +25,14 @@ export const createquote=async(req,res,next)=>{
         return res.status(400).json({errors:errors.array()});
     }
     try{
-        const {email,quote}=req.body;
-        await LeadService.sendQuoteEmail(email,quote);
+        const {email,quote,licensetype,quantity}=req.body;
+        console.log(email,quote,licensetype,quantity);
+        await LeadService.sendQuoteEmail(email,quote,licensetype,quantity);
         res.status(200).json({message:'Quote email sent successfully'});
         next();
     }
     catch(error){
-        res.status(500).json({error:error.message});
         next(error);
+        res.status(500).json({error:error.message});
     }
 }

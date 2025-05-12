@@ -46,7 +46,9 @@ const HeroSection = () => {
         try{
             const result=await api.acceptQuote({
                 email:user.email,
-                quote:quoteResult.estimatedValue || quoteResult.value || 'N/A'
+                quote:quoteResult.estimatedValue || quoteResult.value || 'N/A',
+                licensetype:formData.licensetype,
+                quantity:formData.quantity
             });
             console.log(result);
         }

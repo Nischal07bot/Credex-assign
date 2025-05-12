@@ -19,7 +19,7 @@ export const sendLeadEmail=async(lead)=>{
                <ul>
                  <li>Email: ${lead.email}</li>
                  <li>Company: ${lead.company}</li>
-                 <li>License: ${lead.licenseType}</li>
+                 <li>License: ${lead.licensetype}</li>
                  <li>Message: ${lead.message}</li>
                </ul>`
       }
@@ -31,15 +31,17 @@ export const sendLeadEmail=async(lead)=>{
         console.log("Error sending email",error);
       }
 }
-export const sendQuoteEmail=async(data)=>{
+export const sendQuoteEmail=async(email,quote,licensetype,quantity)=>{
   const mailOptions={
     from:'singhnischal953@gmail.com',
     to:process.env.ADMIN_EMAIL,
     subject:'New Quote Request',
-    html:`<p><strong>${data.email}</strong> requested a quote</p>
+    html:`<p><strong>${email}</strong> requested a quote</p>
     <ul>
-    <li>Email: ${data.email}</li>
-    <li>Quote: ${data.quote}</li>
+    <li>Email: ${email}</li>
+    <li>Quote: ${quote}</li>
+    <li>License Type: ${licensetype}</li>
+    <li>Quantity: ${quantity}</li>
   </ul>`
   }
   try{
