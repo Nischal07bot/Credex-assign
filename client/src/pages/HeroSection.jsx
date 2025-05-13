@@ -3,16 +3,27 @@
 import {useState} from 'react';
 import {api} from '../Services/api';
 import {useAuth} from '../context/AuthContext.jsx';
-
+import { FaShieldAlt, FaMoneyBillWave, FaClock, FaUserTie } from 'react-icons/fa';
+import {motion} from 'framer-motion';
 const HeroSection = () => {
     const {user, logout} = useAuth();
     const [formData,setFormData]=useState({
         licensetype:'',
         quantity:1
     });
+    const [contactForm, setContactForm] = useState({
+        name: '',
+        email: '',
+        company: '',
+        licenseType: '',
+        message: ''
+    });
     const [quoteResult, setQuoteResult] = useState(null);//for getting the quote result
     const [isLoading, setIsLoading] = useState(false);//for getting the modal loading
     const [showModal,setShowModal]=useState(false);
+    const [clickedtest1,setClickedtest1]=useState(false);
+    const [clickedtest2,setClickedtest2]=useState(false);
+    const [clickedtest3,setClickedtest3]=useState(false);
     const handleChange=(e)=>{//handling on the input change
         const {name,value}=e.target;
         setFormData(prev =>({
@@ -57,19 +68,48 @@ const HeroSection = () => {
             alert("An error occurred while accepting the quote. Please try again.");
         }
     }
+
+    const handleContactSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Add your contact form submission logic here
+            console.log('Contact form submitted:', contactForm);
+            alert('Thank you for your message. We will get back to you soon!');
+            setContactForm({
+                name: '',
+                email: '',
+                company: '',
+                licenseType: '',
+                message: ''
+            });
+        } catch (error) {
+            console.error(error);
+            alert('Failed to send message. Please try again.');
+        }
+    };
+
+    const handleContactChange = (e) => {
+        const { name, value } = e.target;
+        setContactForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     return (
-        <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 min-h-screen flex items-center">
-            <div className="container mx-auto px-6 py-16">
-                {/* Add Logout Button */}
-                <div className="absolute top-4 right-4">
-                    <button
-                        onClick={logout}
-                        className="!bg-white !text-indigo-600 ring-2 ring-white px-4 py-2 rounded-lg font-semibold hover:!bg-red-600 hover:!text-white transition-all duration-300 ease-in-out"
-                    >
-                        Logout
-                    </button>
-                </div>
-                
+        <div className="relative min-h-screen  w-screen bg-gradient-to-r from-blue-600 to-indigo-700 overflow-x-hidden">
+            {/* Logout Button */}
+            <div className="absolute top-4 right-4 z-50 px-4 py-2">
+                <button
+                    onClick={logout}
+                    className="!bg-white !text-indigo-600 ring-2 ring-white px-4 py-2 rounded-lg font-semibold hover:!bg-red-600 hover:!text-white transition-all duration-300 ease-in-out"
+                >
+                    Logout
+                </button>
+            </div>
+
+            {/* Hero Section */}
+            <div className=" w-full px-6 py-16">
                 <div className="max-w-3xl">
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                         Sell Your Unused Software Licenses
@@ -114,9 +154,15 @@ const HeroSection = () => {
 
                     {/* Quote Result Display */}
                     {quoteResult && (
-                        <div className="mt-8 bg-white rounded-lg p-6 shadow-lg">
-                            <h2 className="text-2xl font-bold text-indigo-600 mb-4">Your Quote Result</h2>
-                            <div className="space-y-3">
+                        <motion.div
+                        initial={{opacity:0,y:100}}
+                        animate={{opacity:1,y:0}}
+                        transition={{duration:2,ease:'easeOut'}}
+                        className="mt-8 bg-white rounded-lg p-6 shadow-lg"
+                        >
+                            <div className="mt-8 bg-white rounded-lg p-6 shadow-lg">
+                        <h2 className="text-2xl font-bold text-indigo-600 mb-4">Your Quote Result</h2>
+                        <div className="space-y-3">
                                 <div className="flex justify-between">
                                     <span className="text-indigo-600">License Type:</span>
                                     <span className="font-semibold text-indigo-600">{formData.licensetype}</span>
@@ -151,7 +197,179 @@ const HeroSection = () => {
                                 </button>
                             </div>
                         </div>
+                        </motion.div>
+                        
                     )}
+                </div>
+            </div>
+
+            {/* Why Choose Us Section */}
+            
+    {/* "Why Choose Us" content */}
+    <div className="w-full bg-white py-16">
+    <div className="w-full mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose Us</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <motion.div
+    initial={{ opacity: 1 }}
+    transition={{ duration: 0.5, ease: 'easeInOut' }}
+    onClick={() => setClickedtest1(!clickedtest1)}
+    animate={{
+        scale: clickedtest1 ? 1.1 : 1, // Scale up when clicked
+        opacity: clickedtest1 ? 0.9 : 1, // Reduce opacity when clicked
+        zIndex: clickedtest1 ? 10 : 1, // Bring to front when clicked
+    }}
+>
+                        <div className="text-center p-6 rounded-lg bg-gray-50 hover:shadow-lg transition duration-300">
+                            <FaShieldAlt className="w-12 h-12 mx-auto text-indigo-600 mb-4" />
+                            <h3 className="text-xl text-gray-800 font-semibold mb-2">Secure Transactions</h3>
+                            <p className="text-gray-600">Bank-level security for all your transactions and data protection.</p>
+                        </div>
+                        </motion.div>
+                        <motion.div
+    initial={{ opacity: 1 }}
+    transition={{ duration: 0.5, ease: 'easeInOut' }}
+    onClick={() => setClickedtest2(!clickedtest2)}
+    animate={{
+        scale: clickedtest2 ? 1.1 : 1, // Scale up when clicked
+        opacity: clickedtest2 ? 0.9 : 1, // Reduce opacity when clicked
+        zIndex: clickedtest2 ? 10 : 1, // Bring to front when clicked
+    }}
+>
+                        
+                        <div className="text-center p-6 rounded-lg bg-gray-50 hover:shadow-lg transition duration-300">
+                            <FaMoneyBillWave className="w-12 h-12 mx-auto text-indigo-600 mb-4" />
+                            <h3 className="text-xl text-gray-800 font-semibold mb-2">Best Market Rates</h3>
+                            <p className="text-gray-600">Get the highest value for your software licenses in the market.</p>
+                        </div>
+                        </motion.div>
+                        <motion.div
+    initial={{ opacity: 1 }}
+    transition={{ duration: 0.5, ease: 'easeInOut' }}
+    onClick={() => setClickedtest3(!clickedtest3)}
+    animate={{
+        scale: clickedtest3 ? 1.1 : 1, // Scale up when clicked
+        opacity: clickedtest3 ? 0.9 : 1, // Reduce opacity when clicked
+        zIndex: clickedtest3 ? 10 : 1, // Bring to front when clicked
+    }}
+>
+                        
+                        <div className="text-center p-6 rounded-lg bg-gray-50 hover:shadow-lg transition duration-300">
+                            <FaClock className="w-12 h-12 mx-auto text-indigo-600 mb-4" />
+                            <h3 className="text-xl text-gray-800 font-semibold mb-2">Quick Process</h3>
+                            <p className="text-gray-600">Fast verification and payment within 24-48 hours.</p>
+                        </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+</div>
+
+            {/* Testimonials Section */}
+            <div className="w-full bg-gray-50 py-16">
+                <div className="w-full mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">What Our Clients Say</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex items-center mb-4">
+                                <FaUserTie className="w-10 h-10 text-indigo-600 mr-4" />
+                                <div>
+                                    <h4 className="font-semibold">John Smith</h4>
+                                    <p className="text-gray-600">CTO, TechCorp Inc.</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-600">"SoftSell helped us recover significant value from our unused licenses. The process was smooth and professional."</p>
+                        </div>
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex items-center mb-4">
+                                <FaUserTie className="w-10 h-10 text-indigo-600 mr-4" />
+                                <div>
+                                    <h4 className="font-semibold">Sarah Johnson</h4>
+                                    <p className="text-gray-600">IT Director, Global Solutions</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-600">"Excellent service and competitive rates. We've used SoftSell multiple times for our license management needs."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Contact Form Section */}
+            <div className="w-full bg-white py-16">
+                <div className="w-full mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Contact Us</h2>
+                    <div className="max-w-2xl mx-auto">
+                        <form onSubmit={handleContactSubmit} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-gray-700 mb-2">Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={contactForm.name}
+                                        onChange={handleContactChange}
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 mb-2">Email</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={contactForm.email}
+                                        onChange={handleContactChange}
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 mb-2">Company</label>
+                                <input
+                                    type="text"
+                                    name="company"
+                                    value={contactForm.company}
+                                    onChange={handleContactChange}
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 mb-2">License Type</label>
+                                <select
+                                    name="licenseType"
+                                    value={contactForm.licenseType}
+                                    onChange={handleContactChange}
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    required
+                                >
+                                    <option className="text-gray-800" value="">Select License Type</option>
+                                    <option className="text-gray-800" value="Microsoft">Basic</option>
+                                    <option className="text-gray-800" value="Adobe">Professional</option>
+                                    <option className="text-gray-800" value="Autodesk">Enterprise</option>
+                                    <option className="text-gray-800" value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 mb-2">Message</label>
+                                <textarea
+                                    name="message"
+                                    value={contactForm.message}
+                                    onChange={handleContactChange}
+                                    rows="4"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    required
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300"
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
