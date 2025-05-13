@@ -4,7 +4,9 @@ import {useState} from 'react';
 import {api} from '../Services/api';
 import {useAuth} from '../context/AuthContext.jsx';
 import { FaShieldAlt, FaMoneyBillWave, FaClock, FaUserTie } from 'react-icons/fa';
+import {SiChatbot} from 'react-icons/si';
 import {motion} from 'framer-motion';
+import {useEffect} from 'react';
 const HeroSection = () => {
     const {user, logout} = useAuth();
     const [formData,setFormData]=useState({
@@ -24,6 +26,17 @@ const HeroSection = () => {
     const [clickedtest1,setClickedtest1]=useState(false);
     const [clickedtest2,setClickedtest2]=useState(false);
     const [clickedtest3,setClickedtest3]=useState(false);
+    const [showChat,setshowChat]=useState(false);
+    const [showHelpbubble,setshowHelpbubble]=useState(false);
+    useEffect(()=>{
+        if(showChat)
+        {
+            setshowHelpbubble(false);
+        }
+        else{
+            setshowHelpbubble(true);
+        }
+    },[showChat])
     const handleChange=(e)=>{//handling on the input change
         const {name,value}=e.target;
         setFormData(prev =>({
@@ -107,7 +120,21 @@ const HeroSection = () => {
                     Logout
                 </button>
             </div>
+            <div className="group fixed bottom-4 right-4 z-50">
+            
+                <button
 
+                onClick={() => setshowChat(!showChat)}
+                className="fixed bottom-4 right-4 z-50 bg-white text-indigo-600 rounded-full p-4 ring-2 ring-white hover:bg-red-600 hover:text-white transition-all duration-300 ease-in-out flex items-center justify-center animate-pulse">
+                <SiChatbot className="w-8 h-8" />
+                </button>
+                {showHelpbubble && (
+    <div className="fixed bottom-20 right-4 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md z-40 animate-bounce">
+        Need help? 👋
+    </div>
+)}
+                
+            </div>
             {/* Hero Section */}
             <div className=" w-full px-6 py-16">
                 <div className="max-w-3xl">
